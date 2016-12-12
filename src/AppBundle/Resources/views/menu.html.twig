@@ -1,0 +1,29 @@
+<ul class="nav navbar-nav pull-right">
+    <li>
+        <a href="{{ path("presupuesto_listado") }}">
+            <img src="{{ asset("bundles/presupuesto/img/figuras/file.png") }}" />
+            Presupuestos
+        </a>
+    </li>
+    <li id="li_drop" class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            Manos de Obra
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="{{ path("manosdeobra_agregar") }}" class="ajax" data-res="#contenido-ajax">Agregar</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="{{ path("manosdeobra_listado") }}">Ver Todas</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="{{ path("materiales_listado") }}">
+            <img src="{{ asset("bundles/presupuesto/img/figuras/file.png") }}" />
+            Materiales
+        </a>
+    </li>
+</ul>

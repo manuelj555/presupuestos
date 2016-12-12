@@ -1,0 +1,36 @@
+<div id="modal_manodeobra" class="modal fade" style="width: 60%">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Manos de Obra</h3>
+    </div>
+    <div class="modal-body">
+        <div class="text-center form-inline">
+            <label>Mano de Obra</label>
+            <input ng-model="filtro" type="search" class="span5"/>
+            <input type="reset" class="btn" value="Limpiar" />
+        </div>
+        <br/>
+        <table class="table table-bordered table-striped presupuesto-manos-de-obra">
+            <thead>
+                <tr>
+                    <th style="width: 60%">Descripción</th>
+                    <th style="font-size: 11px">U/medidad</th>
+                    <th style="font-size: 10px">Tipo de Trabajo</th>
+                    <th style="width: 70px">Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-click="addObra(obra)" ng-repeat="obra in manosdeobra |filter:filtro|orderBy:'descripcion'">
+                    <td>{{ '{{obra.descripcion}}' }}</td>
+                    <td>{{ '{{obra.medidas.medida}}' }}</td>
+                    <td>{{ '{{obra.tiposDeObras.nombre}}' }}</td>
+                    <td>{{ '{{obra.precio|number:2}}' }} Bs</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn">Cerrar</a>
+        <input type="submit" class="btn btn-primary" value="Guardar" />
+    </div>
+</div>

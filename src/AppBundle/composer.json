@@ -1,0 +1,33 @@
+{
+    "name": "manuelj555/presupuesto",
+    "description": "Bundle para la creación de presupuestos de trabajos de construcción",
+    "require": {
+        "php": ">=5.3.3",
+        "knplabs/knp-paginator-bundle": "~2.4",
+        "CodePlex/PHPExcel": "*",
+        "leafo/lessphp": "~0.3.9",
+        "friendsofsymfony/jsrouting-bundle": "@stable"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
+        "post-update-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ]
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web"
+    },
+    "autoload":{
+        "psr-0": { "K2\\PresupuestoBundle" : "" }
+    },
+    "target-dir": "K2/PresupuestoBundle"
+}

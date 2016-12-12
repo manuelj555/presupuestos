@@ -1,0 +1,45 @@
+presupuesto_listado:
+    pattern:  /{page}
+    defaults: { _controller: PresupuestoBundle:Presupuesto:listado, page: 1 }
+    requirements:
+        page: \d+
+        
+presupuesto_edicion:
+    pattern:  /presupuesto/{id}
+    defaults: 
+        _controller: PresupuestoBundle:Presupuesto:edicion
+        id: null
+    requirements:
+        id: \d+
+        _method: GET
+        
+presupuesto_guardar:
+    pattern:  /presupuesto/{id}
+    defaults: 
+        _controller: PresupuestoBundle:Presupuesto:save
+        id: null
+#    condition: request.isXmlHttpRequest()
+    requirements:
+        id: \d+
+        _method: POST|PUT
+    options:
+        expose: true
+        
+presupuesto_export:
+    pattern:  /presupuesto/{id}.xls
+    defaults: 
+        _controller: PresupuestoBundle:Presupuesto:export
+    requirements:
+        id: \d+
+     
+_manosdeobra:
+    prefix: /manosdeobra
+    resource: routing/manosdeobra.yml
+     
+_materiales:
+    prefix: /materiales
+    resource: routing/materiales.yml
+     
+_unidades:
+    prefix: /unidades
+    resource: routing/unidad.yml
