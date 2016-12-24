@@ -20,7 +20,7 @@ class DescripcionPresupuesto
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Groups({"solo_lectura"})
+     * @Groups({"default"})
      */
     private $id;
 
@@ -28,6 +28,7 @@ class DescripcionPresupuesto
      * @var integer
      *
      * @ORM\Column(name="posicion", type="integer", nullable=true)
+     * @Groups({"default"})
      */
     private $posicion;
 
@@ -35,6 +36,7 @@ class DescripcionPresupuesto
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=300, nullable=true)
+     * @Groups({"default"})
      */
     private $descripcion;
 
@@ -42,6 +44,7 @@ class DescripcionPresupuesto
      * @var string
      *
      * @ORM\Column(name="cantidad", type="string", length=10, nullable=true)
+     * @Groups({"default"})
      */
     private $cantidad;
 
@@ -49,6 +52,7 @@ class DescripcionPresupuesto
      * @var string
      *
      * @ORM\Column(name="precio", type="string", length=30, nullable=true)
+     * @Groups({"default"})
      */
     private $precio;
 
@@ -56,6 +60,7 @@ class DescripcionPresupuesto
      * @var string
      *
      * @ORM\Column(name="subtotal", type="string", length=10, nullable=true)
+     * @Groups({"default"})
      */
     private $subtotal;
 

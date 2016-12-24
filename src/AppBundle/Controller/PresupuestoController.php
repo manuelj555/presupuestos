@@ -82,7 +82,7 @@ class PresupuestoController extends Controller
     public function getDataAction(Presupuesto $presupuesto)
     {
         $data = $this->get('serializer')->serialize($presupuesto, 'json', [
-            'groups' => ['serializacion'],
+            'groups' => ['serializacion', 'default'],
         ]);
 
         return JsonResponse::fromJsonString($data);
@@ -100,7 +100,7 @@ class PresupuestoController extends Controller
 
         $serializer->denormalize($data, Presupuesto::class, 'json', [
             'object_to_populate' => $presupuesto,
-            'groups' => ['deserializacion'],
+            'groups' => ['deserializacion', 'default'],
         ]);
 
         $em = $this->getDoctrine()->getManager();
@@ -124,7 +124,7 @@ class PresupuestoController extends Controller
         $em->flush();
 
         return JsonResponse::fromJsonString($serializer->serialize($presupuesto, 'json', [
-            'groups' => ['serializacion'],
+            'groups' => ['serializacion', 'default'],
         ]));
     }
 

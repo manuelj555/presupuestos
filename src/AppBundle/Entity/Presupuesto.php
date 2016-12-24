@@ -23,6 +23,7 @@ class Presupuesto
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"default"})
      */
     private $id;
 
@@ -30,6 +31,7 @@ class Presupuesto
      * @var string
      *
      * @ORM\Column(name="titulo", type="string", length=100, nullable=true)
+     * @Groups({"default"})
      */
     private $titulo;
 
@@ -37,6 +39,7 @@ class Presupuesto
      * @var float
      *
      * @ORM\Column(name="total", type="float", nullable=true)
+     * @Groups({"default"})
      */
     private $total;
 
