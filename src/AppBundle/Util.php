@@ -1,6 +1,6 @@
 <?php
 
-namespace K2\PresupuestoBundle;
+namespace AppBundle;
 
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;

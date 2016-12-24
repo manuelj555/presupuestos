@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8"/>
+    <title>.::Sistema de Presupuesto de Trabajo::.</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/css/styles.css') }}"/>
+    {% endblock %}
+</head>
+<body>
+<div class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            {#<a class="brand" href="{{ path("presupuesto_listado") }}">Control de Presupuesto</a>#}
+            {#{% include 'menu.html.twig' %}#}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="hero-unit1">
+        <h2 style="text-align: center">{% block titulo "" %}</h2>
+        {% block cuerpo "" %}
+    </div>
+    <hr/>
+    <footer>
+    </footer>
+</div>
+<div id="contenido-ajax"></div>
+<div class="loading"><img src="{{ asset("img/figuras/cargando.gif") }}"/>
+    <div></div>
+</div>
+{% include 'modal.html.twig' %}
+<script type="text/javascript">var PUBLIC_PATH = "<?php echo PUBLIC_PATH ?>";</script>
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('build/js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/presupuesto.js') }}"></script>
+{% endblock %}
+</body>
 </html>

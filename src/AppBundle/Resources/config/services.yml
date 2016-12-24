@@ -1,17 +1,17 @@
 parameters:
-#    presupuesto.example.class: K2\PresupuestoBundle\Example
+#    presupuesto.example.class: AppBundle\Example
 
 services:
 #    presupuesto.example:
 #        class: %presupuesto.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
     k2_view_selector:
-        class: K2\PresupuestoBundle\Service\ViewSelector
+        class: AppBundle\Service\ViewSelector
         arguments: 
             - "@service_container"
             
     k2_twig_extensions:
-        class: K2\PresupuestoBundle\Twig\PresupuestoExtension
+        class: AppBundle\Twig\PresupuestoExtension
         tags:
           - {name: twig.extension}
           
@@ -23,27 +23,27 @@ services:
           
     presupuesto.manodeobra_manager:
         parent: presupuesto.abstract_manager 
-        class: K2\PresupuestoBundle\Model\ManoDeObraManager
+        class: AppBundle\Model\ManoDeObraManager
         arguments:
             - PresupuestoBundle:ManosDeObra
           
     presupuesto.material_manager:
         parent: presupuesto.abstract_manager 
-        class: K2\PresupuestoBundle\Model\MaterialManager
+        class: AppBundle\Model\MaterialManager
         arguments:
             - PresupuestoBundle:Material
           
     presupuesto.manager:
         parent: presupuesto.abstract_manager 
-        class: K2\PresupuestoBundle\Model\PresupuestoManager
+        class: AppBundle\Model\PresupuestoManager
         arguments:
             - PresupuestoBundle:Presupuestos
 
     presupuesto.form:
-        class: K2\PresupuestoBundle\Form\PresupuestoForm
+        class: AppBundle\Form\PresupuestoForm
         tags:
           - {name: form.type, alias: presupuesto}
         arguments:
             - @doctrine.orm.entity_manager
-            - @jms_serializer
+#            - @jms_serializer
           

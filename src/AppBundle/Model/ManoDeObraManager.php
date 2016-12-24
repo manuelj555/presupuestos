@@ -1,11 +1,11 @@
 <?php
 
-namespace K2\PresupuestoBundle\Model;
+namespace AppBundle\Model;
 
 use Doctrine\ORM\EntityManager;
-use K2\PresupuestoBundle\Entity\ManoDeObraRepository;
-use K2\PresupuestoBundle\Entity\ManosDeObra;
-use K2\PresupuestoBundle\Form\ManoDeObraForm;
+use AppBundle\Entity\ManoDeObraRepository;
+use AppBundle\Entity\ManosDeObra;
+use AppBundle\Form\ManoDeObraForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 

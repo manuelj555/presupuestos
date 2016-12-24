@@ -1,13 +1,13 @@
 <?php
 
-namespace K2\PresupuestoBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * ManoDeObraMaterial
  *
- * @ORM\Table()
+ * @ORM\Table(name="mano_de_obra_material")
  * @ORM\Entity
  */
 class ManoDeObraMaterial
@@ -24,14 +24,14 @@ class ManoDeObraMaterial
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="ManosDeObra",  inversedBy="materiales")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ManoDeObra")
      */
     private $manoDeObra;
 
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Materiales")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Material")
      */
     private $material;
 
@@ -45,7 +45,7 @@ class ManoDeObraMaterial
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Unidades")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Unidad")
      */
     private $defaultUnidad;
 
@@ -132,10 +132,10 @@ class ManoDeObraMaterial
     /**
      * Set defaultUnidad
      *
-     * @param \K2\PresupuestoBundle\Entity\Unidades $defaultUnidad
+     * @param \AppBundle\Entity\Unidades $defaultUnidad
      * @return ManoDeObraMaterial
      */
-    public function setDefaultUnidad(\K2\PresupuestoBundle\Entity\Unidades $defaultUnidad = null)
+    public function setDefaultUnidad(\AppBundle\Entity\Unidades $defaultUnidad = null)
     {
         $this->defaultUnidad = $defaultUnidad;
     
@@ -145,7 +145,7 @@ class ManoDeObraMaterial
     /**
      * Get defaultUnidad
      *
-     * @return \K2\PresupuestoBundle\Entity\Unidades 
+     * @return \AppBundle\Entity\Unidades
      */
     public function getDefaultUnidad()
     {

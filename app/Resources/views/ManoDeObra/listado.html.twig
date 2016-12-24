@@ -1,0 +1,63 @@
+{% extends "base.html.twig" %}
+
+{% block titulo "Manos de Obras del Sistema" %}
+
+{% block cuerpo %}
+<div id="resultado"></div>
+<p>
+<div class="text-center">
+    <form method="post" action="{{ path("manosdeobra_listado") }}" class="form-inline" >
+        <div class="form-group">
+            <label class="sr-only" for="buscar_manos_de_obra">Mano de Obra</label>
+            <input id="buscar_manos_de_obra" name="description" value="{{ description|escape('html') }}" type="search" class="form-control"/>
+        </div>
+        <input type="submit" class="btn btn-default" />
+    </form>
+</div>
+</p>
+<form class="validationEngineContainer ajax" data-res="#resultado" method="post">
+    <table class="table table-striped table-hover table-condensed manos_de_obras_list">
+        <thead>
+            <tr>
+                <th style="width: 40%">Descripción</th>
+                <th>U/medidad</th>
+                <th>Tipo de Trabajo</th>
+                <th>Precio</th>
+                <th>Creada</th>
+                <th>Actualizada</th>
+                <th style="width: 50px">Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody {#data-medidas="{{ form_widget(form.medidas)|e }}" data-tiposdeobras="{{ form_widget(form.tiposDeObras)|e }}" data-descripcion="{{ form_widget(form.descripcion)|e }}" data-precio="{{ form_widget(form.precio)|e }}"#}>
+            {% for item in manosdeobra %}
+            <tr>
+                <td>{{ item.descripcion|escape }}</td>
+                <td>{{ item.medidas.medida|escape }}</td>
+                <td>{{ item.tiposDeObras.nombre|escape }}</td>
+                <td>{{ item.precio|number_format(2) }} Bs</td>
+                <td>{{ item.fechaAt|date("d-m-Y") }}</td>
+                <td>{{ item.fechaIn|date("d-m-Y") }}</td>
+                <td class="link-imagen">
+                    <a href="{{ path("manosdeobra_editar",{id:item.id}) }}" class="ajax" data-res="#contenido-ajax"><img src="{{ asset("img/figuras/editar.png") }}" /></a>
+                </td>
+                <td class="link-imagen">
+                    <a href="#"><img src="{{ asset("img/figuras/eliminar.png") }}" /></a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="100">
+                    No exisen Manos de Obra
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+{{ knp_pagination_render(manosdeobra) }}
+{% endblock cuerpo %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('js/manosdeobras.js') }}"></script>
+{% endblock javascripts %}

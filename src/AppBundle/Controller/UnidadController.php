@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace K2\PresupuestoBundle\Controller;
+namespace AppBundle\Controller;
 
-use K2\PresupuestoBundle\Entity\Materiales;
+use AppBundle\Entity\Material;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,10 +21,10 @@ class UnidadController extends Controller
 {
 
     /**
-     * @ParamConverter("material", class="PresupuestoBundle:Materiales")
+     * @ParamConverter("material", class="PresupuestoBundle:Material")
      * @Template()
      */
-    public function unidadesSelectAction(Materiales $material)
+    public function unidadesSelectAction(Material $material)
     {
 
         $em = $this->getDoctrine()->getManager();

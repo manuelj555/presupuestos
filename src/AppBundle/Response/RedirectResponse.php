@@ -1,6 +1,6 @@
 <?php
 
-namespace K2\PresupuestoBundle\Response;
+namespace AppBundle\Response;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace K2\PresupuestoBundle\Twig;
+namespace AppBundle\Twig;
 
-use K2\PresupuestoBundle\Util;
+use AppBundle\Util;
 
 class PresupuestoExtension extends \Twig_Extension
 {

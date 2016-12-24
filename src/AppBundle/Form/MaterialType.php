@@ -1,8 +1,8 @@
 <?php
 
-namespace K2\PresupuestoBundle\Form;
+namespace AppBundle\Form;
 
-use K2\PresupuestoBundle\Form\UnidadType;
+use AppBundle\Form\UnidadType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -37,7 +37,7 @@ class MaterialType extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults(array(
-            'data_class' => 'K2\\PresupuestoBundle\\Entity\\Materiales',
+            'data_class' => 'K2\\PresupuestoBundle\\Entity\\Material',
         ));
     }
 

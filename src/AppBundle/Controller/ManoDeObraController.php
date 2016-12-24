@@ -1,10 +1,10 @@
 <?php
 
-namespace K2\PresupuestoBundle\Controller;
+namespace AppBundle\Controller;
 
-use K2\PresupuestoBundle\Entity\ManosDeObra;
-use K2\PresupuestoBundle\Model\ManoDeObraManager;
-use K2\PresupuestoBundle\Response\SuccessResponse;
+use AppBundle\Entity\ManosDeObra;
+use AppBundle\Model\ManoDeObraManager;
+use AppBundle\Response\SuccessResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -70,7 +70,7 @@ class ManoDeObraController extends Controller
         }
 
         if ($request->isXmlHttpRequest()) {
-            return $this->render('@Presupuesto/ManoDeObra/form_ajax.html.twig', array(
+            return $this->render('ManoDeObra/form_ajax.html.twig', array(
                         'form' => $form->createView(),
             ));
         }

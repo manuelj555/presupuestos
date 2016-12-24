@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block cuerpo %}
+    <div id="presupuesto">
+        {{ '{{ name }}' }}
+
+        <App api-url="{{ path('presupuesto_obtener_datos', {id: presupuesto.id}) }}" />
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+

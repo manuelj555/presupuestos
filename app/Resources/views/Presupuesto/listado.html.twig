@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+
+{% block titulo %}
+Presupuestos del Sistema
+<a class="btn btn-primary btn-large pull-right" href="{{ path("presupuesto_edicion") }}">Crear Presupuesto</a>
+{% endblock titulo %}
+
+{% block cuerpo %}
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Total Bs</th>
+            <th>Generar Excel</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th colspan="100">
+                {{ knp_pagination_render(presupuestos) }}
+            </th>
+        </tr>
+    </tfoot>
+    <tbody>
+        {% for item in presupuestos %}
+            <tr>
+                <td>{{ item.titulo|escape }}</td>
+                <td>{{ item.total|escape }} Bs</td>
+                <td class="link-imagen">
+                    <a target="_blank" href="{{ path("presupuesto_export",{id : item.id}) }}"><img src="{{ asset("img/figuras/imprimir.gif") }}" /></a>
+                </td>
+                <td class="link-imagen">
+                    <a href="{{ path("presupuesto_edicion",{id:item.id}) }}"><img src="{{ asset("img/figuras/editar.png") }}" /></a>
+                </td>
+                <td class="link-imagen">
+                    <a href="#"><img src="{{ asset("img/figuras/eliminar.png") }}" /></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="100">
+                    No exisen Presupuestos
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock cuerpo %}

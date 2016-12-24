@@ -1,9 +1,9 @@
 <?php
 
-namespace K2\PresupuestoBundle\Response;
+namespace AppBundle\Response;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use K2\PresupuestoBundle\Util;
+use AppBundle\Util;
 
 class ErrorResponse extends JsonResponse
 {

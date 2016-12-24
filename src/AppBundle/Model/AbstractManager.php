@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace K2\PresupuestoBundle\Model;
+namespace AppBundle\Model;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;

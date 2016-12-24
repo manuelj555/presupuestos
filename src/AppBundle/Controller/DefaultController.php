@@ -1,6 +1,6 @@
 <?php
 
-namespace K2\PresupuestoBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

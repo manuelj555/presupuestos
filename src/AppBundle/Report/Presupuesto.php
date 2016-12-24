@@ -1,8 +1,8 @@
 <?php
 
-namespace K2\PresupuestoBundle\Report;
+namespace AppBundle\Report;
 
-use K2\PresupuestoBundle\Entity\Presupuestos;
+use AppBundle\Entity\Presupuestos;
 use PHPExcel;
 use PHPExcel_Style_Alignment;
 use PHPExcel_Style_Alignment as PHPExcel_Style_Alignment2;

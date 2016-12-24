@@ -1,6 +1,6 @@
 <?php
 
-namespace K2\PresupuestoBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

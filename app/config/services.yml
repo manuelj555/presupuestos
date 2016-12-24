@@ -1,9 +1,18 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/service_container.html
-parameters:
-#    parameter_name: value
-
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.serializer.normalizer.custom_object.abstract:
+        abstract: true
+        public: false
+        class: AppBundle\Serializer\Normalizer\CustomObjectNormalizer
+        autowire: true
+
+    app.serializer.normalizer.presupuesto:
+        parent: "app.serializer.normalizer.custom_object.abstract"
+        class: AppBundle\Serializer\Normalizer\PresupuestoNormalizer
+        tags:
+            - { name: serializer.normalizer }
+
+    app.serializer.normalizer.descripcion:
+        parent: "app.serializer.normalizer.custom_object.abstract"
+        class: AppBundle\Serializer\Normalizer\DescripcionPresupuestoNormalizer
+        tags:
+            - { name: serializer.normalizer }

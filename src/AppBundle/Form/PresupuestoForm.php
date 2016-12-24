@@ -1,11 +1,11 @@
 <?php
 
-namespace K2\PresupuestoBundle\Form;
+namespace AppBundle\Form;
 
 use Doctrine\ORM\EntityManager;
 use JMS\Serializer\SerializerInterface;
-use K2\PresupuestoBundle\Form\DescripcionForm;
-use K2\PresupuestoBundle\Form\Listener\PresupuestoListener;
+use AppBundle\Form\DescripcionForm;
+use AppBundle\Form\Listener\PresupuestoListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;

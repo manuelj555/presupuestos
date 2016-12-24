@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace K2\PresupuestoBundle\Util;
+namespace AppBundle\Util;
 
 /**
  * Description of StringUtil

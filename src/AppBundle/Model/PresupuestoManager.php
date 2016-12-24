@@ -1,11 +1,11 @@
 <?php
 
-namespace K2\PresupuestoBundle\Model;
+namespace AppBundle\Model;
 
 use Doctrine\ORM\EntityManager;
-use K2\PresupuestoBundle\Entity\PresupuestoRepository;
-use K2\PresupuestoBundle\Entity\Presupuestos;
-use K2\PresupuestoBundle\Form\PresupuestoForm;
+use AppBundle\Entity\PresupuestoRepository;
+use AppBundle\Entity\Presupuestos;
+use AppBundle\Form\PresupuestoForm;
 use Symfony\Component\Form\FormFactoryInterface;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace K2\PresupuestoBundle\Service;
+namespace AppBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

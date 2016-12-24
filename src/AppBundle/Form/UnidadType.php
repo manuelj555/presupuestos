@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace K2\PresupuestoBundle\Form;
+namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

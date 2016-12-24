@@ -1,24 +1,27 @@
 <?php
 
-namespace K2\PresupuestoBundle\Controller;
+namespace AppBundle\Controller;
 
+use AppBundle\Entity\DescripcionPresupuesto;
+use AppBundle\Entity\Presupuesto;
+use AppBundle\Entity\Presupuestos;
+use AppBundle\Model\PresupuestoManager;
+use AppBundle\Report;
 use Closure;
-use K2\PresupuestoBundle\Entity\Presupuestos;
-use K2\PresupuestoBundle\Model\PresupuestoManager;
-use K2\PresupuestoBundle\Report;
-use K2\PresupuestoBundle\Response\ErrorResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PresupuestoController extends Controller
 {
 
     /**
-     * 
+     *
      * @return PresupuestoManager
      */
     protected function getManager()
@@ -27,7 +30,7 @@ class PresupuestoController extends Controller
     }
 
     /**
-     * 
+     *
      * @param type $page
      * @return type
      * @Template()
@@ -35,11 +38,11 @@ class PresupuestoController extends Controller
     public function listadoAction($page)
     {
         $query = $this->getManager()
-                ->getRepository()
-                ->queryAll();
+            ->getRepository()
+            ->queryAll();
 
         $presupuestos = $this->get("knp_paginator")
-                ->paginate($query, $page);
+            ->paginate($query, $page);
 
         return array(
             'presupuestos' => $presupuestos,
@@ -47,43 +50,82 @@ class PresupuestoController extends Controller
     }
 
     /**
-     * @ParamConverter("presupuesto", class="PresupuestoBundle:Presupuestos")
-     * @Template("PresupuestoBundle:Presupuesto:presupuesto.html.twig")
+     * @Route("/new/", name="presupuesto_crear")
      */
-    public function edicionAction(Request $request, Presupuestos $presupuesto = null)
+    public function newAction()
     {
-        $form = $this->getManager()->getForm($presupuesto);
-        
-        $serializer = $this->get('jms_serializer');
-        
-//        var_dump($serializer->serialize($form->getData(), 'json'));die;
-        return array(
-            'form' => $form->createView(),
-            'presupuesto' => $form->getData(),
-        );
+        $presupuesto = new Presupuesto();
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($presupuesto);
+        $em->flush();
+
+        return $this->redirectToRoute('presupuesto_editar', [
+            'id' => $presupuesto->getId(),
+        ]);
     }
 
     /**
-     * @ParamConverter("presupuesto", class="PresupuestoBundle:Presupuestos")
-     * @Template("PresupuestoBundle:Presupuesto:presupuesto.html.twig")
+     * @Route("/edit/{id}/", name="presupuesto_editar")
      */
-    public function saveAction(Request $request, Presupuestos $presupuesto = null)
+    public function edicionAction(Presupuesto $presupuesto)
     {
-        $isNew = $presupuesto === null;
-        $manager = $this->getManager();
-        $form = $manager->getForm($presupuesto);
+        return $this->render('presupuesto.html.twig', [
+            'presupuesto' => $presupuesto,
+        ]);
+    }
 
-        $form->handleRequest($request);
+    /**
+     * @Route("/ajax/{id}/", name="presupuesto_obtener_datos")
+     * @Method("GET")
+     */
+    public function getDataAction(Presupuesto $presupuesto)
+    {
+        $data = $this->get('serializer')->serialize($presupuesto, 'json', [
+            'groups' => ['serializacion'],
+        ]);
 
-        if ($form->isValid()) {
+        return JsonResponse::fromJsonString($data);
+    }
 
-            $presupuesto = $form->getData();
-            $manager->save($presupuesto);
+    /**
+     * @Route("/save/{id}/", name="presupuesto_guardar")
+     * @Route("/ajax/{id}/", name="presupuesto_guardar_datos")
+     * @Method("POST")
+     */
+    public function saveAction(Request $request, Presupuesto $presupuesto)
+    {
+        $serializer = $this->get('serializer');
+        $data = $serializer->decode($request->getContent(), 'json');
 
-            return new Response($presupuesto->getId());
-        } else {
-            return new ErrorResponse($form->getErrors());
+        $serializer->denormalize($data, Presupuesto::class, 'json', [
+            'object_to_populate' => $presupuesto,
+            'groups' => ['deserializacion'],
+        ]);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $rep = $em->getRepository(DescripcionPresupuesto::class);
+
+        foreach ($data['descripciones'] as $item) {
+            if (empty($item['id']) or !$desc = $rep->find($item['id'])) {
+                $desc = new DescripcionPresupuesto($presupuesto);
+            }
+
+            $serializer->denormalize($item, DescripcionPresupuesto::class, null, [
+                'object_to_populate' => $desc,
+                'groups' => ['deserializacion'],
+            ]);
+
+            $em->persist($desc);
         }
+
+        $em->persist($presupuesto);
+        $em->flush();
+
+        return JsonResponse::fromJsonString($serializer->serialize($presupuesto, 'json', [
+            'groups' => ['serializacion'],
+        ]));
     }
 
     /**
@@ -91,9 +133,9 @@ class PresupuestoController extends Controller
      */
     public function exportAction(Presupuestos $presupuesto)
     {
-        return $this->prepareExport(function()use ($presupuesto) {
-                    Report\Presupuesto::excel($presupuesto);
-                }, $presupuesto->getTitulo());
+        return $this->prepareExport(function () use ($presupuesto) {
+            Report\Presupuesto::excel($presupuesto);
+        }, $presupuesto->getTitulo());
     }
 
     protected function prepareExport(Closure $function, $filename = 'report')
@@ -102,6 +144,7 @@ class PresupuestoController extends Controller
         $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         $response->headers->set('Content-Disposition', "attachment;filename=\"{$filename}.xlsx\"");
         $response->headers->set('Cache-Control', 'ax-age=0');
+
         return $response;
     }
 
