@@ -18,8 +18,8 @@
 
         <Draggable :list="items" :options="{handle: '.posicion', animation: 150}">
             <transition-group>
-                <ManoDeObra v-for="(item, index) in items"
-                            :item="item"
+                <Descripcion v-for="(item, index) in items"
+                            :descripcion="item"
                             :key="index"
                             :index="index"
                             @change="changeItemData"
@@ -62,7 +62,7 @@
 <script>
     import Vue from 'vue'
     import Draggable from 'vuedraggable'
-    import ManoDeObra from 'Presupuesto/ManoDeObra.vue'
+    import Descripcion from 'Presupuesto/Descripcion.vue'
     import _ from 'lodash'
     import axios from 'axios'
 
@@ -121,6 +121,7 @@
             },
             changeItemData(index, data) {
                 Vue.set(this.items, index, Object.assign({}, this.items[index], data))
+                console.log('Actualizando', index, data, this.items[index])
                 this.save()
             },
             removeItem(index) {
@@ -134,6 +135,6 @@
             },
         },
 
-        components: {ManoDeObra, Draggable},
+        components: {Descripcion, Draggable},
     }
 </script>

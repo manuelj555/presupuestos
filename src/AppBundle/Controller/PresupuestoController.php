@@ -114,7 +114,7 @@ class PresupuestoController extends Controller
 
             $serializer->denormalize($item, DescripcionPresupuesto::class, null, [
                 'object_to_populate' => $desc,
-                'groups' => ['deserializacion'],
+                'groups' => ['deserializacion', 'default'],
             ]);
 
             $em->persist($desc);
