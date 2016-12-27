@@ -15,7 +15,7 @@
                     type="text"
                     v-model="precio"
                     class="precio form-control"
-                    change="changePrecio"
+                    @change="changePrecio"
             />
         </div>
         <div class="col-xs-2">
@@ -32,34 +32,31 @@
     import _ from 'lodash'
     import $ from 'jquery'
 
-    //    const DIRECTION_DOWN = 'down'
-    //    const DIRECTION_UP = 'up'
-
     export default {
         props: {
             index: {required: true, type: Number},
             descripcion: {required: true, type: Object},
         },
 
-        data () {
-            return {
-                contenido: this.descripcion.descripcion,
-                precio: this.descripcion.precio,
-                cantidad: this.descripcion.cantidad,
-            }
+        data (){
+            return this.getData()
         },
 
-        updated() {
-//            console.debug('Actualizado componente de item', this.descripcion)
-        },
-
-        computed: {
-//            content () {
-//                return this.descripcion.descripcion
-//            },
+        watch: {
+            'descripcion.id' (){
+                // Si cambia el id de la descripcion, pues cambiamos la data del componente
+                Object.assign(this, this.getData())
+            },
         },
 
         methods: {
+            getData() {
+                return {
+                    contenido: this.descripcion.descripcion,
+                    precio: this.descripcion.precio,
+                    cantidad: this.descripcion.cantidad,
+                }
+            },
             changeData () {
                 this.data.total = this.getTotal()
                 this.$emit('change', this.index, this.data)

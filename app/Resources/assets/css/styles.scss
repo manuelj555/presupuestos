@@ -143,10 +143,20 @@ td.orden {
   }
 
   .descripcion-presupuesto {
-    padding: 2px 0;
+    padding: 3px 0;
+    margin-bottom: 3px;
     z-index: 0;
     transition: all 100ms;
+    border-bottom: 1px solid #ddd;
 
+    &:first-child{
+      border-top: 1px solid #ddd;
+    }
+
+    .posicion, .sub-total{
+      padding: 3px;
+      vertical-align: bottom;
+    }
     .descripcion {
       //width: 92%;
     }
@@ -167,6 +177,12 @@ td.orden {
 
     .opciones {
       text-align: center;
+    }
+    .posicion {
+      i{
+        vertical-align: bottom;
+      }
+
     }
 
     &:hover {
@@ -190,6 +206,16 @@ td.orden {
         font-size: 1.4em;
         margin-top: 5px;
       }
+    }
+    &:not(:hover) {
+      .posicion {
+        i.fa{
+          //padding-top: 8px;
+        }
+      }
+      //input{
+      //  padding-top: 3px;
+      //}
     }
   }
 }

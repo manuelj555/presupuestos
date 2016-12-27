@@ -3,7 +3,7 @@
         <div class="row presupuesto-headers">
             <div class="col-xs-2">Título</div>
             <div class="col-xs-10">
-                <input type="text" v-model="titulo" class="form-control" />
+                <input type="text" v-model="titulo" class="form-control"/>
             </div>
         </div>
 
@@ -16,14 +16,18 @@
             <div class="col-xs-1">Remover</div>
         </div>
 
-        <Draggable :list="items" :options="{handle: '.posicion', animation: 150}">
+        <Draggable
+                :list="items"
+                :options="{handle: '.posicion', animation: 150}"
+                @update="save"
+        >
             <transition-group>
                 <Descripcion v-for="(item, index) in items"
-                            :descripcion="item"
-                            :key="index"
-                            :index="index"
-                            @change="changeItemData"
-                            @remove="removeItem"
+                             :descripcion="item"
+                             :key="index"
+                             :index="index"
+                             @change="changeItemData"
+                             @remove="removeItem"
                 />
             </transition-group>
         </Draggable>
@@ -66,6 +70,10 @@
     import _ from 'lodash'
     import axios from 'axios'
 
+    function extractNumber(string) {
+        return Number(_.toString(string).replace(/\D+/g, ''))
+    }
+
     export default {
         props: {
             apiUrl: {required: true, type: String},
@@ -79,34 +87,43 @@
         },
 
         created () {
-//            this.resource = this.$resource(this.apiUrl + '{/id}')
             this.getManosDeObra()
         },
 
         computed: {
             total () {
-                return _.sumBy(this.items, 'total')
+                return _.sumBy(this.items, item => Number(item.subtotal))
             }
         },
 
         methods: {
-            getManosDeObra () {
-                axios.get(this.apiUrl).then(({data}) => {
-                    this.id = data.id
-                    this.titulo = data.titulo || ''
+            preparePostData(data) {
 
-                    if(data.descripciones){
-                        this.items = data.descripciones
-                    }
+                data.descripciones = data.descripciones.map((desc, index) => {
+                    return Object.assign({},desc, {
+                        subtotal: _.toString(desc.subtotal),
+                        posicion: index + 1,
+                    })
                 })
+
+                return data
+            },
+            loadFromData (data) {
+                this.id = data.id
+                this.titulo = data.titulo || ''
+
+                if (data.descripciones) {
+                    this.items = data.descripciones
+                }
+            },
+            getManosDeObra () {
+                axios.get(this.apiUrl).then(({data}) => this.loadFromData(data))
             },
             save () {
-                axios.post(this.apiUrl, {
+                axios.post(this.apiUrl, this.preparePostData({
                     titulo: this.titulo,
                     descripciones: this.items,
-                }).then((response) => {
-                    console.debug(response)
-                })
+                })).then(({data}) => this.loadFromData(data))
             },
             addItem () {
                 this.items.push({
@@ -120,7 +137,10 @@
                 this.save()
             },
             changeItemData(index, data) {
-                Vue.set(this.items, index, Object.assign({}, this.items[index], data))
+                let desc = Object.assign({}, this.items[index], data);
+                desc.subtotal = extractNumber(desc.precio) * extractNumber(desc.cantidad)
+
+                Vue.set(this.items, index, desc)
                 console.log('Actualizando', index, data, this.items[index])
                 this.save()
             },
